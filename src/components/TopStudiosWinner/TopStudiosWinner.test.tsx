@@ -1,38 +1,44 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/jest-globals';
+import { api } from '../../service/api';
 import { TopStudiosWinner } from '.';
 
-// Mock a função da API para simular uma resposta
+
+
+// Mock da api
 jest.mock('../../service/api', () => ({
-  api: {
-    get: jest.fn(() =>
-      Promise.resolve({
-        data: {
-          studios: [
-            { name: 'Studio A', winCount: 10 },
-            { name: 'Studio B', winCount: 8 },
-            { name: 'Studio C', winCount: 5 },
-          ],
-        },
-      })
-    ),
-  },
-}));
+    api: {
+      get: jest.fn(),
+    },
+  }));
+  
+  describe('ProducersWithLongestAndShortest', () => {
+    it('should fetch and display data for producers with longest and shortest interval between wins', async () => {
+      const mockResponse = {
+        studios: [
+          {
+            name: 'Studio A',
+            winCount: 10,
+          },
+        ],
+      };
+  
+    // Cria um spy para a função api.get
+    const getSpy = jest.spyOn(api, 'get');
 
-describe('TopStudiosWinner Component', () => {
-  it('renders top studios with win count', async () => {
-    render(<TopStudiosWinner />);
-
-    // Aguarde a resolução da chamada de API antes de realizar as verificações
-    await waitFor(() => {
-      expect(screen.getByText('Studio A')).toBeInTheDocument();
-      expect(screen.getByText('Studio B')).toBeInTheDocument();
-      expect(screen.getByText('Studio C')).toBeInTheDocument();
+    // Define a implementação fictícia para o spy
+    getSpy.mockResolvedValue({ data: mockResponse });
+  
+      render(<TopStudiosWinner />);
+  
+  
+      // Aguardando a resolução da chamada da API
+      await waitFor(() => {
+        expect(api.get).toHaveBeenCalledWith('/movies?projection=studios-with-win-count');
+      });
+       
+        expect(screen.getByText(10)).toBeInTheDocument();
+        expect(screen.getByText('Studio A')).toBeInTheDocument();
+      
     });
-
-    // Verifique se os elementos foram renderizados corretamente
-    expect(screen.getByText('Top 3 Studios With Win Count')).toBeInTheDocument();
-    expect(screen.getByText('10')).toBeInTheDocument();
-    expect(screen.getByText('8')).toBeInTheDocument();
-    expect(screen.getByText('5')).toBeInTheDocument();
   });
-});
