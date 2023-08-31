@@ -1,0 +1,45 @@
+.container{
+    background-color: var(--gray-700);
+    border-radius: 8px;
+    width: 50%;
+}
+.container h2{
+    padding: 0.3rem 1rem;
+    color: var(--white);
+    font-weight: bold;
+}
+.container h3{
+    font-size: 1.2rem;
+    padding: 0.3rem 1rem;
+    color: var(--white);
+    font-weight: lighter;
+}
+.container table{
+    width: 100%;
+    padding: 0.5rem;
+    
+}
+.container th {
+    color: var(--white);
+    background-color: var(--gray-200);
+    font-weight: 400;
+    padding: 1rem 2rem;
+    text-align: left;
+    line-height: 1.5rem;
+    text-align: center;
+    border-radius:0.25rem;
+}
+.container td{
+    padding: 1rem 2rem;
+    border: 0;
+    background-color: var(--gray-100);
+    font-weight: 400;
+    color: var(--white);
+    border-radius:0.25rem;
+}
+@media(max-width:800px) {
+    .container{
+        margin-top: 1rem;
+        width: 100%;
+    }
+}

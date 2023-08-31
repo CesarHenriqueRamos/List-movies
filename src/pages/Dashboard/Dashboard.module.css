@@ -1,0 +1,13 @@
+.container{
+    width: calc(100% - 10rem);
+}
+.containerTable{
+    display: flex;
+    gap: 2rem;
+     padding: 1.5rem;
+}
+@media(max-width:800px) {
+    .containerTable{
+        display: block;
+    }
+}

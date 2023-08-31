@@ -1,0 +1,23 @@
+
+.pagination ul{
+    display: flex;
+    list-style-type: none;
+    justify-content: flex-end;
+    
+}
+.link{
+    padding: 0.4rem 0.5rem;
+    cursor: pointer;
+    background-color: var(--gray-100);
+    border-radius: 8px;
+    color: var(--white);
+    margin-right: 0.2rem;
+}
+.linkActive{
+    padding: 0.4rem 0.5rem;
+    cursor: pointer;
+    background-color: var(--blue-200);
+    border-radius: 8px;
+    color: var(--white);
+    margin-right: 0.2rem;
+}

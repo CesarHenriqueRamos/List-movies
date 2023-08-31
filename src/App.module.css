@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+}
+.sidebar{
+ background-color: var(--gray-200);   
+}
+.sidebar nav{
+    width: 10rem;
+    height: calc(100vh - 4rem);
+    
+    
+    padding: 1.5rem;
+}
+.sidebar nav a{
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--white);
+}
