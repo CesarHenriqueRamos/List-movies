@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react';
 import styles from './ProducersWithLongestAndShortest.module.css';
 import { api } from '../../service/api';
 
-interface getDataProps{
-    producer:string;
-    interval:number;
-    previousWin:number;
-    followingWin:number;
+interface getDataProps {
+    producer: string;
+    interval: number;
+    previousWin: number;
+    followingWin: number;
 }
 export function ProducersWithLongestAndShortest() {
-    const [min, setMin] = useState<getDataProps>({} as getDataProps)
-    const [max, setMax] = useState<getDataProps>({} as getDataProps)
+    const [min, setMin] = useState<getDataProps[]>([])
+    const [max, setMax] = useState<getDataProps[]>([])
     useEffect(() => {
         getData()
     }, [])
-   async function  getData(){
-    const response = await  api.get('/movies?projection=max-min-win-interval-for-producers')
-    setMax(response.data.max[0])
-    setMin(response.data.min[0])
+    async function getData() {
+        const response = await api.get('/movies?projection=max-min-win-interval-for-producers')
+        setMax(response.data.max)
+        setMin(response.data.min)
     }
     return (
         <div className={styles.container}>
@@ -33,12 +33,14 @@ export function ProducersWithLongestAndShortest() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{max.producer}</td>
-                        <td>{max.interval}</td>
-                        <td>{max.previousWin}</td>
-                        <td>{max.followingWin}</td>
-                    </tr>
+                    {max.map((max: getDataProps) => (
+                        <tr key={max.producer}>
+                            <td>{max.producer}</td>
+                            <td>{max.interval}</td>
+                            <td>{max.previousWin}</td>
+                            <td>{max.followingWin}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
             <h3>Minimum</h3>
@@ -52,12 +54,14 @@ export function ProducersWithLongestAndShortest() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                {min.map((min: getDataProps) => (
+                    <tr key={min.producer}>
                         <td>{min.producer}</td>
                         <td>{min.interval}</td>
-                        <td>{min.previousWin}</td>
+                        <td data-testid="min-previous-year">{min.previousWin}</td>
                         <td>{min.followingWin}</td>
                     </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
